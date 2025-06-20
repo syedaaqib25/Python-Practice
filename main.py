@@ -90,7 +90,7 @@
 # class person:
 #     name = None
 #     age = None
-#
+
 #     def __init__(self):
 #         print("object has been created")
 #     def greet(self):
@@ -102,3 +102,78 @@
 #     def __init__(self, name, age):
 #         self._name = name
 #         self.age = age
+
+# import os
+# os.getcwd()
+# print(os.getcwd())
+# f=open('C:/emp.txt','r+',-1)
+# print(f.read())
+# f.close()
+
+# with open("C:/emp.txt", "r") as file:
+#     content = file.read()
+#     print(content)
+
+
+try:
+    x = int(input("Enter a number: "))
+    result = 10 / x
+except ZeroDivisionError:
+    print("Cannot divide by zero.")
+except ValueError:
+    print("Invalid input. Enter a number.")
+else:
+    print(f"Result: {result}")
+finally:
+    print("Always runs, even if there was an error.")
+
+
+# Custom Context Manager Examples in Python
+
+# 1. Class-based Context Manager
+class CustomContextManager:
+    def __init__(self, resource_name):
+        self.resource_name = resource_name
+
+    def __enter__(self):
+        print(f"Acquiring resource: {self.resource_name}")
+        # Initialize or acquire the resource here
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        # Clean up or release the resource here
+        print(f"Releasing resource: {self.resource_name}")
+        # Handle exceptions if needed
+        if exc_type:
+            print(f"Exception caught: {exc_type}, {exc_value}")
+        # Returning False will propagate the exception, True will suppress it
+        return False
+
+    def do_something(self):
+        print(f"Using resource: {self.resource_name}")
+
+# Usage example for class-based context manager
+print("Class-based context manager example:")
+with CustomContextManager("MyResource") as manager:
+    manager.do_something()
+print()
+
+# 2. Generator-based Context Manager using contextlib
+from contextlib import contextmanager
+
+@contextmanager
+def custom_context_manager(resource_name):
+    print(f"Acquiring resource: {resource_name}")
+    try:
+        yield resource_name
+    except Exception as e:
+        print(f"Exception caught: {e}")
+        # Optionally suppress exception by not re-raising
+        raise
+    finally:
+        print(f"Releasing resource: {resource_name}")
+
+# Usage example for generator-based context manager
+print("Generator-based context manager example:")
+with custom_context_manager("MyResource") as resource:
+    print(f"Using resource: {resource}")
