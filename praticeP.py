@@ -116,45 +116,65 @@
 
 
 
-import csv, json
-import hashlib
+import csv, json, os
 
-def anonymize_name(name):
-    # Hash the name to anonymize it
-    return hashlib.sha256(name.encode()).hexdigest()[:8]
+csv_file = "data.csv"
+json_file = "data.json"
+data = []
 
-data = [
-    {"id": 1, "name": "Alice"},
-    {"id": 2, "name": "Bob"},
-    {"id": 3, "name": "Charlie"}
-]
+# Load existing data if present
+if os.path.exists(json_file):
+    with open(json_file, "r") as f:
+        data = json.load(f)
 
-# Anonymize names in data
-for item in data:
-    item["name"] = anonymize_name(item["name"])
+def save_data():
+    with open(csv_file, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=["id", "name"])
+        writer.writeheader()
+        writer.writerows(data)
+    with open(json_file, "w") as f:
+        json.dump(data, f, indent=2)
 
-# Write CSV
-with open("data.csv", "w", newline="") as f:
-    writer = csv.DictWriter(f, fieldnames=data[0].keys())
-    writer.writeheader()
-    writer.writerows(data)
+while True:
+    print("\nChoose an option:")
+    print("1. Add Entry")
+    print("2. Remove Entry by ID")
+    print("3. Show Data")
+    print("4. Exit")
+    
+    choice = input("Enter choice (1-4): ")
 
-# Write JSON
-with open("data.json", "w") as f:
-    json.dump(data, f, indent=2)
+    if choice == "1":
+        try:
+            id_ = int(input("Enter ID: "))
+            name = input("Enter Name: ")
+            data.append({"id": id_, "name": name})
+            save_data()
+            print("Entry added.")
+        except:
+            print("Invalid input.")
 
-# Remove item with id=2
-data = [d for d in data if d["id"] != 2]
+    elif choice == "2":
+        try:
+            id_ = int(input("Enter ID to remove: "))
+            original_len = len(data)
+            data = [d for d in data if d["id"] != id_]
+            if len(data) < original_len:
+                save_data()
+                print("Entry removed.")
+            else:
+                print("ID not found.")
+        except:
+            print("Invalid input.")
 
-# Anonymize names again in updated data (in case new data added)
-for item in data:
-    item["name"] = anonymize_name(item["name"])
+    elif choice == "3":
+        print("\nCurrent Data:")
+        for d in data:
+            print(d)
 
-# Update both files
-with open("data.csv", "w", newline="") as f:
-    writer = csv.DictWriter(f, fieldnames=data[0].keys())
-    writer.writeheader()
-    writer.writerows(data)
+    elif choice == "4":
+        print("Exiting program.")
+        break
 
-with open("data.json", "w") as f:
-    json.dump(data, f, indent=2)
+    else:
+        print("Invalid choice. Please enter 1-4.")
