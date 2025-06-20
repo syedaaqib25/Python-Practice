@@ -115,65 +115,46 @@
 #     print(content)
 
 
-try:
-    x = int(input("Enter a number: "))
-    result = 10 / x
-except ZeroDivisionError:
-    print("Cannot divide by zero.")
-except ValueError:
-    print("Invalid input. Enter a number.")
-else:
-    print(f"Result: {result}")
-finally:
-    print("Always runs, even if there was an error.")
 
+import csv, json
+import hashlib
 
-# Custom Context Manager Examples in Python
+def anonymize_name(name):
+    # Hash the name to anonymize it
+    return hashlib.sha256(name.encode()).hexdigest()[:8]
 
-# 1. Class-based Context Manager
-class CustomContextManager:
-    def __init__(self, resource_name):
-        self.resource_name = resource_name
+data = [
+    {"id": 1, "name": "Alice"},
+    {"id": 2, "name": "Bob"},
+    {"id": 3, "name": "Charlie"}
+]
 
-    def __enter__(self):
-        print(f"Acquiring resource: {self.resource_name}")
-        # Initialize or acquire the resource here
-        return self
+# Anonymize names in data
+for item in data:
+    item["name"] = anonymize_name(item["name"])
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        # Clean up or release the resource here
-        print(f"Releasing resource: {self.resource_name}")
-        # Handle exceptions if needed
-        if exc_type:
-            print(f"Exception caught: {exc_type}, {exc_value}")
-        # Returning False will propagate the exception, True will suppress it
-        return False
+# Write CSV
+with open("data.csv", "w", newline="") as f:
+    writer = csv.DictWriter(f, fieldnames=data[0].keys())
+    writer.writeheader()
+    writer.writerows(data)
 
-    def do_something(self):
-        print(f"Using resource: {self.resource_name}")
+# Write JSON
+with open("data.json", "w") as f:
+    json.dump(data, f, indent=2)
 
-# Usage example for class-based context manager
-print("Class-based context manager example:")
-with CustomContextManager("MyResource") as manager:
-    manager.do_something()
-print()
+# Remove item with id=2
+data = [d for d in data if d["id"] != 2]
 
-# 2. Generator-based Context Manager using contextlib
-from contextlib import contextmanager
+# Anonymize names again in updated data (in case new data added)
+for item in data:
+    item["name"] = anonymize_name(item["name"])
 
-@contextmanager
-def custom_context_manager(resource_name):
-    print(f"Acquiring resource: {resource_name}")
-    try:
-        yield resource_name
-    except Exception as e:
-        print(f"Exception caught: {e}")
-        # Optionally suppress exception by not re-raising
-        raise
-    finally:
-        print(f"Releasing resource: {resource_name}")
+# Update both files
+with open("data.csv", "w", newline="") as f:
+    writer = csv.DictWriter(f, fieldnames=data[0].keys())
+    writer.writeheader()
+    writer.writerows(data)
 
-# Usage example for generator-based context manager
-print("Generator-based context manager example:")
-with custom_context_manager("MyResource") as resource:
-    print(f"Using resource: {resource}")
+with open("data.json", "w") as f:
+    json.dump(data, f, indent=2)
