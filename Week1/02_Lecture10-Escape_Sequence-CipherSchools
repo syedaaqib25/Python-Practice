@@ -1,0 +1,6 @@
+print ("hello \"world\" world") # using \"anything\" can enabile us to use " within " without any error 
+print ('I\'m harshit') # same with \'anything\'
+print ("line A\nline В \n line c") #prints statement after \n into another line 
+print ("name\tharshit") # \t tag 
+print ("this is double backslash\III") " backslach
+print ("hell\blo")

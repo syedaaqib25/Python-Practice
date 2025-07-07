@@ -1,0 +1,8 @@
+name ="Har    shit
+dots = ........
+# 1strip() method
+print(name + dots)
+print(name. 1strip() + dots)
+print(name. rstrip() + dots)
+print(name. strip() + dots)
+print (name. replace(" ", "") + dots)

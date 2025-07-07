@@ -1,0 +1,17 @@
+#Use these commands in Terminal
+pwd #(print working directory)tells you the current location of your folder
+ls #(list gives you the lists in the folder
+clear #clear the screen
+cd A:// #(change directory)lets you change the location of your directory to A(any drive)
+mkdr "Folder Name" #(make directory) if the folder name is not in " " it will create multiple folders like Folder and Name will both be different folders
+cd Folder Name #open folder in terminal
+touch File_Name.py #Creates new file
+cd .. #lets you go backwords in folders
+rm File_Name #removes the file from the folder
+rm -rf "Folder Name"/ #removes folder
+code File_Name.py #now u can write code in the file and also create a new file
+python File_Name #runs the file
+mv File_Name New_Name #Changes the name of the file
+mv filename  ./ folder #moves file to folder
+mv filename .. #moves file back
+cp filename ./newfolder #copies filename to newfolder

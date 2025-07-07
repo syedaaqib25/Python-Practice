@@ -1,0 +1,8 @@
+n=int(input("Guss the number b/w 1 to 100: "))
+if n == 25:
+  print("You Win")
+else:
+    if n > 25:
+        print("Number is Too High")
+    else:
+        print("Numbee is Too Low")

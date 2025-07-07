@@ -1,0 +1,13 @@
+# output : Line A \n Line B
+print("Line A \\n Line B")
+print("Line B \\t line b
+print("this is 4 backslash \\\\\\\\")
+# output : | Ne
+
+print(" \\\" {\\'")
+
+#\' - ' (b)
+
+# NN '\i C8)
+
+#A\\\" = \"

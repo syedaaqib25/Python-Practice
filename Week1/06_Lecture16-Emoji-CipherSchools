@@ -1,0 +1,4 @@
+print("\U0001F6e2")
+print("\U0001F6e4")
+print("\U0001F618")
+#print emoji using website-https://unicode.org/emoji/charts/full-emoji-list.html use \ in strat and 000 instead of +

@@ -1,0 +1,15 @@
+# strings
+ name = "harshit"
+# name[2] = "s"
+ name. replace(?)
+# string indexing
+# print(name[-1])
+# string slicing
+# print(name[-1:0:=1])
+# take user input
+# age = int(input("enter your age : ")) # strings
+# print(age)
+# take two user inputs
+# user_name, age = input("enter your name and seg : ").split(",")
+# print(user_name)
+# print(age)
